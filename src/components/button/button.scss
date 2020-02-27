@@ -1,0 +1,159 @@
+$primaryBgColor: #01abfb;
+$primaryBorderColor: #01abfb;
+$primaryColor: #ffffff;
+
+$primaryHoverBgColor: #009de6;
+$primaryHoverBorderColor: #009de6;
+$primaryHoverColor: #ffffff;
+
+$secondaryBgColor: transparent;
+$secondaryBorderColor: #01abfb;
+$secondaryColor: #01abfb;
+
+$secondaryHoverBgColor: rgba(1, 171, 251, 0.1);
+$secondaryHoverBorderColor: #01abfb;
+$secondaryHoverColor: #01abfb;
+
+$disabledBgColor: #e8e8e8;
+$disabledBorderColor: #e8e8e8;
+$disabledColor: #cccccc;
+
+.button {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none;
+  font-weight: normal;
+  white-space: nowrap;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-width: 1px;
+  border-style: solid;
+  overflow: hidden;
+  box-sizing: border-box;
+  .children {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 auto;
+  }
+  &:before {
+    content: '';
+    display: inline-block;
+    min-height: inherit;
+    height: 100%;
+    vertical-align: middle;
+  }
+  &:focus {
+    outline: none;
+  }
+  &--hasNoBorderRadius {
+    border-radius: 0;
+  }
+  &--withFullWidth {
+    width: 100%;
+    .children {
+      min-width: 100%;
+    }
+  }
+  &--isLoading {
+    cursor: default;
+    .icon,
+    .children {
+      opacity: 0;
+    }
+  }
+
+  // Цвета
+  background-color: $primaryBgColor;
+  border-color: $primaryBorderColor;
+  color: $primaryColor;
+  .icon {
+    display: inline-block;
+    fill: $primaryColor;
+  }
+  .loading {
+    background-color: $primaryBgColor;
+  }
+  .loadingItem {
+    background-color: $primaryColor;
+  }
+  &:hover {
+    background-color: $primaryHoverBgColor;
+    border-color: $primaryHoverBorderColor;
+    color: $primaryHoverColor;
+    .icon {
+      fill: $primaryHoverColor;
+    }
+  }
+  &--isSecondary {
+    background-color: $secondaryBgColor;
+    border-color: $secondaryBorderColor;
+    color: $secondaryColor;
+    .icon {
+      fill: $secondaryColor;
+    }
+    .loading {
+      background-color: $secondaryBgColor;
+    }
+    .loadingItem {
+      background-color: $secondaryColor;
+    }
+    &:hover {
+      background-color: $secondaryHoverBgColor;
+      border-color: $secondaryHoverBorderColor;
+      color: $secondaryHoverColor;
+      .icon {
+        fill: $secondaryHoverColor;
+      }
+    }
+  }
+
+  &--isDisabled,
+  &--isDisabled:hover {
+    background-color: $disabledBgColor;
+    border-color: $disabledBorderColor;
+    color: $disabledColor;
+    cursor: default;
+    .icon {
+      fill: $disabledColor;
+    }
+    .loading {
+      display: none;
+    }
+  }
+
+  // Размеры
+  height: 48px;
+  padding: 0 16px;
+  font-size: 16px;
+  .icon {
+    height: 24px;
+    width: 24px;
+  }
+  &--isMedium {
+    padding: 0 16px;
+    height: 36px;
+    font-size: 14px;
+  }
+  &--isSmall {
+    height: 28px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+}
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
