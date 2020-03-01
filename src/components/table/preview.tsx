@@ -18,20 +18,28 @@ interface ITableComponentProps {
   person: IPerson;
   onAddFavourite: (id: number) => void;
   isFavourite: boolean;
+  isVideoStoppedByUser: boolean;
+  onPause: () => void;
 }
 
-const Preview: React.FC<ITableComponentProps> = ({ person, onAddFavourite, isFavourite }) => {
+const Preview: React.FC<ITableComponentProps> = ({
+  person,
+  onAddFavourite,
+  isFavourite,
+  isVideoStoppedByUser,
+  onPause,
+}) => {
   const divRef = React.useRef<HTMLDivElement>(null);
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
   const { lang } = React.useContext(Context);
   const translates = getTranslates(lang);
 
-  const [isVisible] = useIntersectionObserver(divRef, '-30%');
+  const [isVisible] = useIntersectionObserver(divRef, '-32%');
 
   React.useEffect(() => {
     async function play() {
-      if (!videoRef || !videoRef.current) {
+      if (!videoRef || !videoRef.current || isVideoStoppedByUser) {
         return;
       }
       const playPromise = await videoRef.current.play();
@@ -47,7 +55,7 @@ const Preview: React.FC<ITableComponentProps> = ({ person, onAddFavourite, isFav
     }
 
     play();
-  }, [isVisible]);
+  }, [videoRef, isVisible, stop]);
 
   const handleAddToFavourite = () => {
     onAddFavourite(person.id);
@@ -87,6 +95,7 @@ const Preview: React.FC<ITableComponentProps> = ({ person, onAddFavourite, isFav
           <video
             ref={videoRef}
             className={styles.video}
+            onClick={onPause}
             loop={true}
             muted={true}
             controls={true}

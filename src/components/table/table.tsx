@@ -25,8 +25,13 @@ const Table: React.FC<ITableComponentProps> = ({
   viewType,
   isLoading,
 }) => {
+  const [isVideoStoppedByUser, setIsVideoStoppedByUser] = React.useState(false);
   const { lang } = React.useContext(Context);
   const translates = getTranslates(lang);
+
+  const handlePauseByUser = () => {
+    setIsVideoStoppedByUser(true);
+  };
 
   if (isLoading) {
     return <div>{translates['Loading']}...</div>;
@@ -41,6 +46,8 @@ const Table: React.FC<ITableComponentProps> = ({
       return (
         <Preview
           key={person.id}
+          isVideoStoppedByUser={isVideoStoppedByUser}
+          onPause={handlePauseByUser}
           person={person}
           onAddFavourite={onAddFavourite}
           isFavourite={favouritesIds.includes(person.id)}
