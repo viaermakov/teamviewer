@@ -41,26 +41,34 @@ module.exports = {
         },
       },
       {
-        test: /\.(png|jpg|gif|jpeg|ttf)$/,
+        test: /\.(png|jpg|gif|jpeg|ttf|svg|mp4)$/,
+        type: 'javascript/auto',
         use: [
           {
             loader: 'file-loader',
             options: {
               name: '[path][name].[ext]',
+              esModule: false,
             },
           },
         ],
       },
       {
-        test: /\.svg/,
-        loader: 'url-loader?limit=26000&mimetype=image/svg+xml',
+        test: /\.json$/,
+        loader: 'file-loader',
+        type: 'javascript/auto',
+        options: {
+          name() {
+            return '[path][name].[ext]';
+          },
+        },
       },
     ],
   },
 
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Spootifly Web',
+      title: 'chulakov test app',
       template: './public/index.html',
       filename: 'index.html',
       jsExtension: '.gz',

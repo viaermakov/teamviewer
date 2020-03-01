@@ -1,8 +1,8 @@
-import json from './data.json';
-
 export async function getPersonsApi() {
+  const res = await fetch('src/public/data/data.json');
+  const data = await res.json();
   await sleep(1000);
-  return json;
+  return data;
 }
 
 function sleep(ms: number) {

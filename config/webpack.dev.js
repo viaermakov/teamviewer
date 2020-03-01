@@ -4,8 +4,6 @@ const common = require('./webpack.common.js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const isDevelopment = process.env.NODE_ENV === 'development';
-
 module.exports = merge(common, {
   mode: 'development',
 
@@ -26,18 +24,18 @@ module.exports = merge(common, {
       {
         test: /\.scss$/,
         use: [
-          isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
               modules: true,
-              sourceMap: isDevelopment,
+              sourceMap: true,
             },
           },
           {
             loader: 'sass-loader',
             options: {
-              sourceMap: isDevelopment,
+              sourceMap: true,
             },
           },
         ],

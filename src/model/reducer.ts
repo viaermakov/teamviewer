@@ -1,4 +1,4 @@
-import { IPerson } from '../models';
+import { IPerson } from '../types';
 import { IPersonsDataAction } from './actions';
 import {
   PERSONS_DATA_FAILURE,
@@ -26,32 +26,39 @@ export function reducer(
   action: IPersonsDataAction,
 ): IPersonsStoreState {
   switch (action.type) {
-    case PERSONS_DATA_REQUEST:
+    case PERSONS_DATA_REQUEST: {
       return {
         ...state,
         isLoading: true,
         persons: [],
       };
-    case PERSONS_DATA_SUCCESS:
+    }
+    case PERSONS_DATA_SUCCESS: {
       const persons = action.payload;
       return {
         ...state,
         isLoading: false,
         persons,
       };
-    case PERSONS_DATA_FAILURE:
+    }
+    case PERSONS_DATA_FAILURE: {
       return {
         ...state,
         isLoading: false,
         persons: [],
       };
-    case ADD_FAVOURITE:
+    }
+    case ADD_FAVOURITE: {
+      const isExisting = state.favourite.includes(action.payload);
+      const favouriteIds = isExisting
+        ? state.favourite.filter(item => item !== action.payload)
+        : [...state.favourite, action.payload];
+
       return {
         ...state,
-        isLoading: false,
-        persons: [],
-        favourite: [],
+        favourite: [...favouriteIds],
       };
+    }
     default:
       return state;
   }

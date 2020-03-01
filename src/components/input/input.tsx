@@ -1,6 +1,8 @@
 import * as React from 'react';
+import cls from 'classnames';
 
 import styles from './input.scss';
+import { SearchIcon } from 'components/icons/search';
 
 export interface ICallbackObject {
   value: string;
@@ -10,6 +12,7 @@ interface IInputProps {
   value?: string;
   placeholder?: string;
   disabled?: boolean;
+  className?: string;
   onChange?: (value: string) => void;
   onEnter?: (value: string) => void;
 }
@@ -20,6 +23,7 @@ const Input: React.SFC<IInputProps> = ({
   disabled,
   onChange,
   onEnter,
+  className,
 }) => {
   const [localValue, setValue] = React.useState<string>('');
 
@@ -41,17 +45,21 @@ const Input: React.SFC<IInputProps> = ({
   const handleOnEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     return onEnter && onEnter(event.currentTarget.value);
   };
+
   return (
-    <input
-      type="text"
-      name="text"
-      className={styles.input}
-      value={localValue}
-      placeholder={placeholder}
-      disabled={disabled}
-      onChange={handleChange}
-      onKeyPress={handleOnKeyPress}
-    />
+    <div className={cls(className, styles.wrapper)}>
+      <input
+        type="text"
+        name="text"
+        className={styles.input}
+        value={localValue}
+        placeholder={placeholder}
+        disabled={disabled}
+        onChange={handleChange}
+        onKeyPress={handleOnKeyPress}
+      />
+      <SearchIcon />
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import { IPerson } from '../models';
+import { IPerson } from '../types';
 import {
   PERSONS_DATA_FAILURE,
   PERSONS_DATA_REQUEST,

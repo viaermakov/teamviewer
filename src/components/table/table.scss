@@ -1,24 +1,10 @@
-.table {
+.standartTable {
+  margin: 1rem 0;
   border: 1px solid #fff;
 }
 
-.row {
+.previewTable {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  grid-template-rows: repeat(1, minmax(50px, 1fr));
-  border-bottom: 1px solid #fff;
-
-  &:last-child {
-    border-bottom: none;
-  }
-}
-
-.cell {
-  height: 100%;
-  box-sizing: border-box;
-  border-left: 1px solid #fff;
-  border-right: 1px solid #fff;
-  align-self: center;
-
-  padding: 0 1rem;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2rem;
 }

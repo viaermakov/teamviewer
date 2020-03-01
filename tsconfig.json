@@ -14,9 +14,13 @@
     "strict": true,
     "outDir": "build",
     "esModuleInterop": true,
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "app/*": ["./app/*"]
+      "src/*": ["src/*"],
+      "components/*": ["src/components/*"],
+      "model/*": ["src/model/*"],
+      "models/*": ["src/types/*"],
+      "translates/*": ["src/translates/*"]
     }
   },
   "exclude": ["build", "node_modules"]

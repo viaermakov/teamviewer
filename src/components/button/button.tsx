@@ -2,17 +2,26 @@ import * as React from 'react';
 import cls from 'classnames';
 
 import styles from './button.scss';
-interface IButtonProps {
-  className: string;
-  onClick: () => void;
+interface IButtonProps<T> {
+  onClick: (v: T) => void;
+  item: T;
+  isActive: boolean;
 }
 
-const Button: React.FC<IButtonProps> = ({ children, className, ...rest }) => {
+function Button<T>({
+  item,
+  onClick,
+  isActive,
+  children,
+}: React.PropsWithChildren<IButtonProps<T>>) {
+  const handleClick = () => {
+    onClick(item);
+  };
   return (
-    <button className={cls(styles.button, className)} {...rest}>
+    <button className={cls(styles.button, { [styles.active]: isActive })} onClick={handleClick}>
       {children}
     </button>
   );
-};
+}
 
 export default Button;
