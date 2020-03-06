@@ -1,15 +1,8 @@
 import * as React from 'react';
-import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-
-import { IStore } from 'model/store';
-import { getPersons, addFavouritePerson } from 'model/actions';
-import { getSortedPersons } from 'model/selectors';
+import { useStore } from 'effector-react';
 
 import Context from 'src/context/createContext';
-import { IPerson } from 'src/types';
 import { getQuery } from 'src/getQuery';
 
 import { Table } from 'components/table';
@@ -20,7 +13,13 @@ import { Tabs } from 'components/tabs';
 
 import styles from './main.scss';
 
-type AppDispatch = ThunkDispatch<IStore, any, AnyAction>;
+import {
+  $favouriteIds,
+  $isLoading,
+  getPersons,
+  addFavouritePerson,
+  selectPersonsByFilter,
+} from 'src/effector/model';
 
 interface IOption {
   id: number;
@@ -36,20 +35,19 @@ const options: IOption[] = [
 ];
 
 const Main: React.FC<IMainContainerProps> = ({}) => {
-  const location = useLocation();
-  const query = getQuery(location);
   const { lang, changeLang } = React.useContext(Context);
 
-  const dispatch: AppDispatch = useDispatch();
-  const selectPersonsWithFilter = React.useMemo(getSortedPersons, []);
-  const persons = useSelector<IStore, IPerson[]>(state => selectPersonsWithFilter(state, query));
-  const favouritesIds = useSelector<IStore, number[]>(state => state.main.favourite);
-  const isLoading = useSelector<IStore, boolean>(state => state.main.isLoading);
+  const location = useLocation();
+  const query = getQuery(location);
+
+  const favouriteIds = useStore($favouriteIds);
+  const isLoading = useStore($isLoading);
+  const persons = selectPersonsByFilter(query);
 
   const [viewType, setViewType] = React.useState<'preview' | 'table'>('table');
 
   React.useEffect(() => {
-    dispatch(getPersons());
+    getPersons();
   }, []);
 
   const handleChangeLang = (option: IOption) => {
@@ -57,7 +55,7 @@ const Main: React.FC<IMainContainerProps> = ({}) => {
   };
 
   const handleAddFavourite = (id: number) => {
-    dispatch(addFavouritePerson(id));
+    addFavouritePerson(id);
   };
 
   const handleChangeViewOnTable = (): void => {
@@ -69,7 +67,7 @@ const Main: React.FC<IMainContainerProps> = ({}) => {
 
   return (
     <div className={styles.layout}>
-      <h1>Redux</h1>
+      <h1>Effector</h1>
       <Tabs<IOption>
         className={styles.lang}
         onClick={handleChangeLang}
@@ -86,7 +84,7 @@ const Main: React.FC<IMainContainerProps> = ({}) => {
         persons={persons}
         isLoading={isLoading}
         onAddFavourite={handleAddFavourite}
-        favouritesIds={favouritesIds}
+        favouritesIds={favouriteIds}
       />
     </div>
   );
