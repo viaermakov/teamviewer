@@ -50,20 +50,21 @@ const Main: React.FC<IMainContainerProps> = ({}) => {
     getPersons();
   }, []);
 
-  const handleChangeLang = (option: IOption) => {
+  const handleChangeLang = React.useCallback((option: IOption) => {
     changeLang && changeLang(option.value);
-  };
+  }, []);
 
-  const handleAddFavourite = (id: number) => {
+  const handleAddFavourite = React.useCallback((id: number) => {
     addFavouritePerson(id);
-  };
+  }, []);
 
-  const handleChangeViewOnTable = (): void => {
+  const handleChangeViewOnTable = React.useCallback((): void => {
     setViewType('table');
-  };
-  const handleChangeViewOnTile = (): void => {
+  }, []);
+
+  const handleChangeViewOnTile = React.useCallback((): void => {
     setViewType('preview');
-  };
+  }, []);
 
   return (
     <div className={styles.layout}>
