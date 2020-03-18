@@ -34,20 +34,20 @@ const Filters: React.FC<Props> = () => {
     { id: 2, label: translates['by name'], value: 'name' },
   ];
 
-  const handleSort = (option: IOption): void => {
+  const handleSort = React.useCallback((option: IOption): void => {
     const queryString = qs.stringify({ ...query, sorting: option.value });
     history.push({ search: decodeURIComponent(queryString) });
-  };
+  }, []);
 
-  const handleOrder = (option: IOption): void => {
+  const handleOrder = React.useCallback((option: IOption): void => {
     const queryString = qs.stringify({ ...query, order: option.value });
     history.push({ search: decodeURIComponent(queryString) });
-  };
+  }, []);
 
-  const handleChange = (value: string) => {
+  const handleChange = React.useCallback((value: string) => {
     const queryString = qs.stringify({ ...query, search: value });
     history.push({ search: decodeURIComponent(queryString) });
-  };
+  }, []);
 
   return (
     <div className={styles.filters}>

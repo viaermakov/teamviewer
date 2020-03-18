@@ -57,9 +57,9 @@ const Preview: React.FC<ITableComponentProps> = ({
     play();
   }, [videoRef, isVisible, stop]);
 
-  const handleAddToFavourite = () => {
+  const handleAddToFavourite = React.useCallback(() => {
     onAddFavourite(person.id);
-  };
+  }, [person.id]);
 
   return (
     <motion.div

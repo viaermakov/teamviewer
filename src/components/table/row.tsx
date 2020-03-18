@@ -25,9 +25,9 @@ const Row: React.FC<ITableComponentProps> = ({ person, onAddFavourite, isFavouri
   const { lang } = React.useContext(Context);
   const translates = getTranslates(lang);
 
-  const handleAddToFavourite = () => {
+  const handleAddToFavourite = React.useCallback(() => {
     onAddFavourite(person.id);
-  };
+  }, []);
 
   return (
     <motion.div key={person.id} layoutTransition={spring}>

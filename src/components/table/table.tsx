@@ -29,9 +29,9 @@ const Table: React.FC<ITableComponentProps> = ({
   const { lang } = React.useContext(Context);
   const translates = getTranslates(lang);
 
-  const handlePauseByUser = () => {
+  const handlePauseByUser = React.useCallback(() => {
     setIsVideoStoppedByUser(true);
-  };
+  }, []);
 
   if (isLoading) {
     return <div>{translates['Loading']}...</div>;
