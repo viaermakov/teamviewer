@@ -45,7 +45,6 @@ const Main: React.FC<IMainContainerProps> = observer(({}) => {
     state.getPersons();
   }, []);
 
-  //React.useEffect(state.getSortedPersons(query.sorting), [query.sorting]);
   const handleChangeLang = React.useCallback((option: IOption) => {
     changeLang && changeLang(option.value);
   }, []);

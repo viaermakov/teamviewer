@@ -29,7 +29,6 @@ export class PersonsStore {
   };
 
   @action addFavouritePerson = (id: number) => {
-    console.log(id);
     const isExisting = this.favouriteIds.includes(id);
     if (isExisting) {
       this.favouriteIds = this.favouriteIds.filter(item => item !== id);
