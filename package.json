@@ -20,6 +20,8 @@
     "framer-motion": "^1.8.4",
     "history": "^4.10.1",
     "intersection-observer": "^0.7.0",
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.1.8",
     "path": "^0.12.7",
     "qs": "^6.9.1",
     "react": "^16.6.3",

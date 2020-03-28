@@ -34,20 +34,29 @@ const Filters: React.FC<Props> = () => {
     { id: 2, label: translates['by name'], value: 'name' },
   ];
 
-  const handleSort = React.useCallback((option: IOption): void => {
-    const queryString = qs.stringify({ ...query, sorting: option.value });
-    history.push({ search: decodeURIComponent(queryString) });
-  }, []);
+  const handleSort = React.useCallback(
+    (option: IOption): void => {
+      const queryString = qs.stringify({ ...query, sorting: option.value });
+      history.push({ search: decodeURIComponent(queryString) });
+    },
+    [query],
+  );
 
-  const handleOrder = React.useCallback((option: IOption): void => {
-    const queryString = qs.stringify({ ...query, order: option.value });
-    history.push({ search: decodeURIComponent(queryString) });
-  }, []);
+  const handleOrder = React.useCallback(
+    (option: IOption): void => {
+      const queryString = qs.stringify({ ...query, order: option.value });
+      history.push({ search: decodeURIComponent(queryString) });
+    },
+    [query],
+  );
 
-  const handleChange = React.useCallback((value: string) => {
-    const queryString = qs.stringify({ ...query, search: value });
-    history.push({ search: decodeURIComponent(queryString) });
-  }, []);
+  const handleChange = React.useCallback(
+    (value: string) => {
+      const queryString = qs.stringify({ ...query, search: value });
+      history.push({ search: decodeURIComponent(queryString) });
+    },
+    [query],
+  );
 
   return (
     <div className={styles.filters}>
