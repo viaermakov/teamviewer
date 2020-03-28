@@ -1,6 +1,7 @@
 import { getPersonsApi } from 'src/services/api';
 import { IPerson } from './../types/index';
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
+import { createTransformer } from 'mobx-utils';
 
 interface IQuery {
   [x: string]: string;
@@ -37,30 +38,32 @@ export class PersonsStore {
     this.favouriteIds = [...this.favouriteIds, id];
   };
 
-  @action getSortedPersons(query: IQuery) {
-    const filteredPersons = this.persons.filter(person =>
-      person.name.toLowerCase().includes(query.search || ''),
-    );
-    const isReverse = query.order === 'desc';
+  @computed get getSortedPersons() {
+    return createTransformer((query: IQuery) => {
+      const filteredPersons = this.persons.filter(person =>
+        person.name.toLowerCase().includes(query.search || ''),
+      );
+      const isReverse = query.order === 'desc';
 
-    switch (query.sorting) {
-      case 'id': {
-        const sortedPersons = filteredPersons.sort((a: IPerson, b: IPerson) => a.id - b.id);
-        this.persons = isReverse ? sortedPersons.reverse() : sortedPersons;
-        break;
+      switch (query.sorting) {
+        case 'id': {
+          const sortedPersons = filteredPersons.sort((a: IPerson, b: IPerson) => a.id - b.id);
+          return isReverse ? sortedPersons.reverse() : sortedPersons;
+          break;
+        }
+        case 'age': {
+          const sortedPersons = filteredPersons.sort((a: IPerson, b: IPerson) => a.age - b.age);
+          return isReverse ? sortedPersons.reverse() : sortedPersons;
+          break;
+        }
+        case 'name': {
+          const sortedPersons = filteredPersons.sort(sortByName);
+          return isReverse ? sortedPersons.reverse() : sortedPersons;
+          break;
+        }
+        default:
+          return isReverse ? filteredPersons.reverse() : filteredPersons;
       }
-      case 'age': {
-        const sortedPersons = filteredPersons.sort((a: IPerson, b: IPerson) => a.age - b.age);
-        this.persons = isReverse ? sortedPersons.reverse() : sortedPersons;
-        break;
-      }
-      case 'name': {
-        const sortedPersons = filteredPersons.sort(sortByName);
-        this.persons = isReverse ? sortedPersons.reverse() : sortedPersons;
-        break;
-      }
-      default:
-        this.persons = isReverse ? filteredPersons.reverse() : filteredPersons;
-    }
+    });
   }
 }

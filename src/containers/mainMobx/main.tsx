@@ -14,6 +14,7 @@ import { Tabs } from 'components/tabs';
 import styles from './main.scss';
 
 import { PersonsStore } from 'src/mobx/model';
+import { IPerson } from 'src/types';
 
 interface IOption {
   id: number;
@@ -36,10 +37,7 @@ const Main: React.FC<IMainContainerProps> = observer(({}) => {
   const [state] = React.useState(new PersonsStore());
 
   const [viewType, setViewType] = React.useState<'preview' | 'table'>('table');
-
-  React.useEffect(() => {
-    state.getSortedPersons(query);
-  }, [query.search, query.order, query.sorting]);
+  const persons: IPerson[] = state.getSortedPersons(query);
 
   React.useEffect(() => {
     state.getPersons();
@@ -78,7 +76,7 @@ const Main: React.FC<IMainContainerProps> = observer(({}) => {
       </div>
       <Table
         viewType={viewType}
-        persons={state.persons}
+        persons={persons}
         isLoading={state.isLoading}
         onAddFavourite={handleAddFavourite}
         favouritesIds={state.favouriteIds}

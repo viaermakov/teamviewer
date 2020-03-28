@@ -22,6 +22,7 @@
     "intersection-observer": "^0.7.0",
     "mobx": "^5.15.4",
     "mobx-react": "^6.1.8",
+    "mobx-utils": "^5.5.5",
     "path": "^0.12.7",
     "qs": "^6.9.1",
     "react": "^16.6.3",
